@@ -1,0 +1,36 @@
+{
+  "name": "fb-mini",
+  "version": "1.0.2",
+  "description": "Simple wrapper for Facebook Graph API.",
+  "homepage": "https://github.com/kotarac/fb-mini",
+  "bugs": "https://github.com/kotarac/fb-mini/issues",
+  "author": {
+    "name": "Stipe Kotarac",
+    "email": "stipe@kotarac.net",
+    "url": "https://github.com/kotarac"
+  },
+  "main": "./lib/fb-mini.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kotarac/fb-mini.git"
+  },
+  "dependencies": {
+    "debug": "^2.2.0",
+    "superagent": "^1.3.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.10.0",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-plumber": "^1.0.1",
+    "gulp-util": "^3.0.6"
+  },
+  "engines": {
+    "node": ">=0.10.0",
+    "npm": ">=1.2.10"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "gulp"
+  }
+}
