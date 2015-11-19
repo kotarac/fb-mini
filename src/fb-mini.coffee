@@ -5,30 +5,32 @@
 - version is not handled
 - callback receives err, data, paging, status if the response has data/paging
 - callback receives err, response, status otherwise
+- no timeout by default
 ###
 
 
-debug = require('debug')('fb')
 host = 'https://graph.facebook.com'
 r = require 'superagent'
 
 
-api = (method, path, token, data, cb) ->
+api = (method, path, token, data, timeout, cb) ->
     method = method.toLowerCase()
 
-    if not cb?
+    if not cb
+        cb = timeout
+        timeout = null
+
+    if not cb
         cb = data
         data = {}
 
     path = path[1..] if path[0] is '/'
     dataMethod = if method is 'get' then 'query' else 'send'
 
-    debug "#{method.toUpperCase()} #{path} #{token}"
-    debug data
-
     request = r[method] "#{host}/#{path}"
         .query access_token: token
         .set 'Accept', 'application/json'
+    request.timeout timeout if timeout
     request[dataMethod] data
         .end (err, res) ->
             return cb res.body.error if res?.body?.error?
@@ -37,11 +39,12 @@ api = (method, path, token, data, cb) ->
             return cb null, res.body, res.statusCode
 
 
-batch = (token, items, cb) ->
-    debug 'BATCH'
-    debug items
+batch = (token, items, timeout, cb) ->
+    if not cb
+        cb = timeout
+        timeout = null
 
-    api 'post', '/v2.4', token, batch: items, (err, res) ->
+    api 'post', '/v2.5', token, batch: items, timeout, (err, res) ->
         return cb err if err
 
         for item in res

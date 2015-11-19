@@ -9,21 +9,15 @@
     "email": "stipe@kotarac.net",
     "url": "https://github.com/kotarac"
   },
-  "main": "./lib/fb-mini.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/kotarac/fb-mini.git"
   },
   "dependencies": {
-    "debug": "^2.2.0",
-    "superagent": "^1.3.0"
+    "superagent": "^1.4.0"
   },
   "devDependencies": {
-    "coffee-script": "^1.10.0",
-    "gulp": "^3.9.0",
-    "gulp-coffee": "^2.3.1",
-    "gulp-plumber": "^1.0.1",
-    "gulp-util": "^3.0.6"
+    "coffee-script": "^1.10.0"
   },
   "engines": {
     "node": ">=0.10.0",
@@ -31,6 +25,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "prepublish": "gulp"
+    "prepublish": "npm run build",
+    "build": "coffee -p src/fb-mini.coffee > index.js"
   }
 }
