@@ -13,6 +13,7 @@
     "type": "git",
     "url": "git://github.com/kotarac/fb-mini.git"
   },
+  "main": "./index.js",
   "dependencies": {
     "superagent": "^1.4.0"
   },
