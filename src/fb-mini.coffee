@@ -31,7 +31,7 @@ api = (method, path, token, data, timeout, cb) ->
         .query access_token: token
         .set 'Accept', 'application/json'
     request.timeout timeout if timeout
-    request[dataMethod] data
+    return request[dataMethod] data
         .end (err, res) ->
             return cb res.body.error if res?.body?.error?
             return cb err if err
@@ -59,10 +59,46 @@ batch = (token, items, timeout, cb) ->
         return cb null, res
 
 
-module.exports =
-    api: api
+getPaginated = (path, token, data, timeout, cb) ->
+    res = []
+    req = null
+
+    if not cb
+        cb = timeout
+        timeout = null
+
+    if timeout
+        setTimeout ->
+            req?.abort?()
+            cb "Exceeded specified timeout of #{timeout}ms."
+            path = null
+        , timeout
+
+    fetch = ->
+        path = path[26..] if path[..25] is host
+
+        req = api 'get', path, token, data, timeout, (err, data, paging, status) ->
+            return cb err if err
+
+            res = res.concat data
+
+            if paging.next
+                path = paging.next
+                return fetch()
+
+            return cb null, res, status
+
+    fetch()
+
+    return
+
+
+module.exports = {
+    api
     get: api.bind undefined, 'get'
     post: api.bind undefined, 'post'
     put: api.bind undefined, 'put'
     del: api.bind undefined, 'del'
-    batch: batch
+    batch
+    getPaginated
+}
