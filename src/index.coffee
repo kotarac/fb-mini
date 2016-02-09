@@ -14,8 +14,6 @@ r = require 'request'
 
 
 api = (method, path, token, data, timeout, cb) ->
-    method = method.toLowerCase()
-
     if not cb
         cb = timeout
         timeout = null
@@ -24,14 +22,15 @@ api = (method, path, token, data, timeout, cb) ->
         cb = data
         data = {}
 
+    method = method.toUpperCase()
     path = path[1..] if path[0] is '/'
 
     options =
-        method: method.toUpperCase()
+        method: method
         url: "#{host}/#{path}"
         headers: 'Accept': 'application/json'
         json: true
-    options[if method is 'get' then 'qs' else 'form'] = data
+    options[if method is 'GET' then 'qs' else 'form'] = data
     options.qs or= {}
     options.qs.access_token = token
     options.timeout = timeout if timeout
@@ -81,7 +80,7 @@ getPaginated = (path, token, data, timeout, cb) ->
     fetch = ->
         path = path[26..] if path[..25] is host
 
-        req = api 'get', path, token, data, timeout, (err, data, paging, status) ->
+        req = api 'GET', path, token, data, timeout, (err, data, paging, status) ->
             return cb err if err
 
             res = res.concat data
@@ -99,10 +98,10 @@ getPaginated = (path, token, data, timeout, cb) ->
 
 module.exports = {
     api
-    get: api.bind undefined, 'get'
-    post: api.bind undefined, 'post'
-    put: api.bind undefined, 'put'
-    del: api.bind undefined, 'del'
+    get: api.bind undefined, 'GET'
+    post: api.bind undefined, 'POST'
+    put: api.bind undefined, 'PUT'
+    del: api.bind undefined, 'DELETE'
     batch
     getPaginated
 }
