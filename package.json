@@ -15,7 +15,7 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "superagent": "^1.4.0"
+    "request": "^2.69.0"
   },
   "devDependencies": {
     "coffee-script": "^1.10.0"
@@ -27,6 +27,7 @@
   "license": "MIT",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "coffee -p src/fb-mini.coffee > index.js"
+    "build": "coffee -b -o . src/index.coffee",
+    "dev": "coffee -w -b -o . src/index.coffee"
   }
 }

@@ -10,7 +10,7 @@
 
 
 host = 'https://graph.facebook.com'
-r = require 'superagent'
+r = require 'request'
 
 
 api = (method, path, token, data, timeout, cb) ->
@@ -25,18 +25,22 @@ api = (method, path, token, data, timeout, cb) ->
         data = {}
 
     path = path[1..] if path[0] is '/'
-    dataMethod = if method is 'get' then 'query' else 'send'
 
-    request = r[method] "#{host}/#{path}"
-        .query access_token: token
-        .set 'Accept', 'application/json'
-    request.timeout timeout if timeout
-    return request[dataMethod] data
-        .end (err, res) ->
-            return cb res.body.error if res?.body?.error?
-            return cb err if err
-            return cb null, res.body.data, res.body.paging, res.statusCode if res.body.data?
-            return cb null, res.body, res.statusCode
+    options =
+        method: method.toUpperCase()
+        url: "#{host}/#{path}"
+        headers: 'Accept': 'application/json'
+        json: true
+    options[if method is 'get' then 'qs' else 'form'] = data
+    options.qs or= {}
+    options.qs.access_token = token
+    options.timeout = timeout if timeout
+
+    return r options, (err, response, body) ->
+        return cb body.error if body?.error
+        return cb err if err
+        return cb null, body.data, body.paging, response.statusCode if body.data
+        return cb null, body, response.statusCode
 
 
 batch = (token, items, timeout, cb) ->
