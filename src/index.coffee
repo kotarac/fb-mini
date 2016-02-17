@@ -47,7 +47,7 @@ batch = (token, items, timeout, cb) ->
         cb = timeout
         timeout = null
 
-    api 'post', '/v2.5', token, batch: items, timeout, (err, res) ->
+    api 'post', '/v2.5', token, batch: JSON.stringify items, timeout, (err, res) ->
         return cb err if err
 
         for item in res
