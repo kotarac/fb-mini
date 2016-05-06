@@ -38,6 +38,7 @@ api = (method, path, token, data, timeout, cb) ->
     return r options, (err, response, body) ->
         return cb body.error if body?.error
         return cb err if err
+        return cb null, body.data, body.summary, body.paging, response.statusCode if body.data and body.summary
         return cb null, body.data, body.paging, response.statusCode if body.data
         return cb null, body, response.statusCode
 
