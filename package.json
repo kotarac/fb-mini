@@ -1,6 +1,6 @@
 {
   "name": "fb-mini",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Simple wrapper for Facebook Graph API.",
   "homepage": "https://github.com/kotarac/fb-mini",
   "bugs": "https://github.com/kotarac/fb-mini/issues",
