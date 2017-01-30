@@ -15,10 +15,10 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "request": "^2.69.0"
+    "request": "^2.79.0"
   },
   "devDependencies": {
-    "coffee-script": "^1.10.0"
+    "coffee-script": "^1.12.3"
   },
   "engines": {
     "node": ">=0.10.0",
