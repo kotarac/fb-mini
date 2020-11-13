@@ -1,27 +1,26 @@
 {
   "name": "fb-mini",
   "version": "4.0.3",
-  "author": "kotarac",
-  "license": "MIT",
-  "description": "Simple wrapper for Facebook Graph API.",
-  "homepage": "https://github.com/kotarac/fb-mini",
-  "bugs": "https://github.com/kotarac/fb-mini/issues",
   "author": {
     "name": "Stipe Kotarac",
     "email": "stipe@kotarac.net",
     "url": "https://github.com/kotarac"
   },
+  "license": "MIT",
+  "description": "Simple wrapper for Facebook Graph API.",
+  "homepage": "https://github.com/kotarac/fb-mini",
+  "bugs": "https://github.com/kotarac/fb-mini/issues",
   "repository": {
     "type": "git",
     "url": "git://github.com/kotarac/fb-mini.git"
   },
   "main": "./index.js",
   "dependencies": {
-    "request": "^2.88.0"
+    "request": "^2.88.2"
   },
   "devDependencies": {
-    "coffeescript": "^2.3.2",
-    "tape": "^4.9.2"
+    "coffeescript": "^2.5.1",
+    "tape": "^5.0.1"
   },
   "engines": {
     "node": ">=6",
